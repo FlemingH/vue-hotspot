@@ -1,8 +1,15 @@
 <template>
 <div>
-  <div class="ui__vue_hotspot" v-if="config">
-    <img class="ui__vue_hotspot_background_image" :src="config.image" @load="successLoadImg" alt="Hotspot Image" >
-    <span class="ui__vue_hotspot_overlay" v-if="config.editable" @click.stop.prevent="addHotspot">
+  <div class="ui__vue_hotspot" ref="vue_hotspot" v-if="config">
+    <img class="ui__vue_hotspot_background_image"
+      ref="vue_hotspot_background_image"
+      :src="config.image"
+      @load="successLoadImg"
+      alt="Hotspot Image">
+    <span class="ui__vue_hotspot_overlay"
+      ref="vue_hotspot_overlay"
+      v-if="config.editable"
+      @click.stop.prevent="addHotspot">
       <p>Please Click The Image To Add Hotspots.</p>
     </span>
     <div class="ui__vue_hotspot_hotspot"
@@ -10,6 +17,7 @@
       :key="i"
       :style="getHotspotPosition(hotspot)"
       :class="'ui__vue_hotspot_hotspot_'+i"
+      :ref="'vue_hotspot_hotspot_'+i"
       @mouseenter="config.interactivity === 'hover' ? toggleClass(i) : null"
       @mouseleave="config.interactivity === 'hover' ? toggleClass(i) : null"
       @click="config.interactivity === 'click' ? toggleClass(i) : null">
@@ -19,7 +27,7 @@
       </div>
     </div>
     <div class="ui__vue_hotspot_buttons_box">
-      <div class="ui__vue_hotspot_buttons" 
+      <div class="ui__vue_hotspot_buttons"
           :class="(config && config.editable)? 'active':''">
         <button class="ui__vue_hotspot_save" @click="saveAllHotspots">Save</button>
         <button class="ui__vue_hotspot_remove" @click="removeAllHotspots">Remove</button>
@@ -90,12 +98,12 @@
 }
 .ui__vue_hotspot_buttons.active {
   padding: 1em;
-  opacity: 1; 
+  opacity: 1;
 }
 /* Action button CSS classes used in `editable:true` mode */
 .ui__vue_hotspot_buttons > .ui__vue_hotspot_save,
 .ui__vue_hotspot_buttons > .ui__vue_hotspot_remove {
-  width: 8em; 
+  width: 8em;
   display: inline-block;
   line-height: 1;
   white-space: nowrap;
@@ -205,9 +213,12 @@ export default {
       // Add resize listener
       window.addEventListener('resize', this.resizeHotspot)
     },
+    copyObj (obj) {
+      return JSON.parse(JSON.stringify(obj))
+    },
     getHotspotPosition (hotspot) {
-      let element = this.$el.querySelector('.ui__vue_hotspot')
-      let tagElement = element.querySelector(`.ui__vue_hotspot_background_image`)
+      let element = this.$refs['vue_hotspot']
+      let tagElement = this.$refs['vue_hotspot_background_image']
 
       let height = tagElement.clientHeight
       let width = tagElement.clientWidth
@@ -218,26 +229,30 @@ export default {
       `
     },
     resizeHotspot () {
-      let element = this.$el.querySelector('.ui__vue_hotspot')
-      let overlay = element.querySelector('.ui__vue_hotspot_overlay')
+      let element = this.$refs['vue_hotspot']
+      let overlay = this.$refs['vue_hotspot_overlay']
       if (!overlay) return
-      let image = element.querySelector(`.ui__vue_hotspot_background_image`)
+      let image = this.$refs['vue_hotspot_background_image']
       overlay.style.height = `${(image.clientHeight / element.clientHeight) * 100}%`
       overlay.style.width = `${(image.clientWidth / element.clientWidth) * 100}%`
       overlay.style.left = `${image.offsetLeft - element.clientLeft}px`
       overlay.style.top = `${image.offsetTop - element.clientTop}px`
     },
     setOptions () {
-      this.config = { ...this.defaultOptions, ...this.initOptions }
+      let defaultOptions = this.copyObj(this.defaultOptions)
+      if (this.config) {
+        defaultOptions = this.config
+      }
+      this.config = { ...defaultOptions, ...this.initOptions }
     },
-    successLoadImg (e) {
+    successLoadImg (event) {
       // Resize after image loaded
       if (event.target.complete === true) {
         this.resizeHotspot()
       }
     },
     addHotspot (e) {
-      let overlay = this.$el.querySelector('.ui__vue_hotspot_overlay')
+      let overlay = this.$refs['vue_hotspot_overlay']
       let relativeX = e.offsetX
       let relativeY = e.offsetY
       let height = overlay.offsetHeight
@@ -262,8 +277,8 @@ export default {
       this.$emit('after-delete')
     },
     toggleClass (i) {
-      let hotspot = this.$el.querySelector(`.ui__vue_hotspot_hotspot_${i}`)
-      hotspot.classList.toggle('active')
+      let hotspot = this.$refs[`vue_hotspot_hotspot_${i}`]
+      hotspot[0].classList.toggle('active')
     }
   },
   mounted () {
