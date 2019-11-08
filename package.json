@@ -1,6 +1,6 @@
 {
   "name": "vue-hotspot",
-  "version": "1.1.5",
+  "version": "1.1.7",
   "description": "Hotspot component for Vue.js.",
   "author": "James Wang",
   "scripts": {
@@ -19,6 +19,7 @@
   "main": "dist/vue-hotspot.js",
   "module": "components/VueHotspot.vue",
   "dependencies": {
+    "@vue/composition-api": "^0.3.2",
     "core-js": "^2.6.5",
     "rollup": "^1.20.3",
     "rollup-plugin-buble": "^0.19.8",
@@ -31,13 +32,13 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-eslint": "^3.11.0",
-    "@vue/cli-plugin-unit-jest": "^3.11.0",
+    "@vue/cli-plugin-unit-jest": "^4.0.5",
     "@vue/cli-service": "^3.11.0",
     "@vue/eslint-config-standard": "^4.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^25.0.0",
     "codecov": "^3.5.0",
     "cross-env": "^5.2.1",
     "eslint": "^5.16.0",

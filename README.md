@@ -90,7 +90,15 @@ export default {
       hotspotConfig: {
         image: 'your-image-url.png',
         editable: true,
-        interactivity: 'hover'
+        interactivity: 'hover',
+        data: [
+          { Message: 'A prepopulated hotspot', Title: 'Vue Hotspot 1', x: 33.3, y: 58.33 },
+          { Message: 'Another prepopulated hotspot', Title: 'Vue Hotspot 2', x: 53.3, y: 78.3 }
+        ],
+        hotspotColor: '#85ce61',
+        messageBoxColor: '#409eff',
+        textColor: '#333',
+        opacity: 0.9
       }
     }
   },
@@ -112,6 +120,19 @@ export default {
 
 You can see more examples [here](https://cn-wx.github.io/vue-hotspot/).
 
+## Config Options
+
+|     options     | description                                                                                                                                       | required |                       default                       |
+|:---------------:|---------------------------------------------------------------------------------------------------------------------------------------------------|:--------:|:---------------------------------------------------:|
+| image           | Default image placeholder                                                                                                                         | true     | an empty image with text 'Oops! image not found...' |
+| data            | Object to hold the hotspot data points.<br>Data structure: `[ {Message: 'String', Title: 'String, x: Float, y: Float'} ]`                           |   false  |                          []                         |
+| editable        | Specify editable in which the plugin is to be used.<br>`true`: Allows to create hotspots from UI.<br>`false`: Display hotspots from `data` object |   false  |                         true                        |
+| interactivity   | Event on which the hotspot data point will show up.<br>allowed values: `click`, `hover`, `none`                                                   |   false  |                        hover                        |
+| hotspotColor    | background color for hotspot dots                                                                                                                 |   false  |                 'rgb(66, 184, 131)'                 |
+| messageBoxColor | background color for hotspot message boxes                                                                                                        |   false  |                 'rgb(255, 255, 255)'                 |
+| textColor       | background color for hotspot text                                                                                                                 |   false  |                 'rgb(53, 73, 94)'                 |
+| opacity         | opacity for hotspots                                                                                                                              |   false  |                         0.8                         |
+
 ## Local development
 
 ```bash
@@ -120,3 +141,7 @@ $ npm run serve
 ```
 
 Open `http://localhost:8080/` to see the demo.
+
+# License
+
+Vue-hotspot component is delivered under the [MIT License](https://github.com/cn-wx/vue-hotspot/blob/master/LICENSE)

@@ -1,8 +1,19 @@
+1.1.8
+* refactor code with composition-api (#68)
+* performance enhancement for window resize listener
+
+1.1.7
+* Update usage in README.
+
+1.1.6
+* Fix repopulate hotspots (#60)(#63).
+* Add custom color configuration.
+
 1.1.5
-* Add vue-hotspot logo
+* Add vue-hotspot logo.
 
 1.1.4
-* Change DOM.querySelector to Vue.$refs
+* Change DOM.querySelector to Vue.$refs.
 
 1.1.3
 * Fix object deep copy bug.
